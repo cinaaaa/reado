@@ -1,6 +1,6 @@
 .text-section-parent {
   position: fixed;
-  z-index: 999999;
+  z-index: 2147483646;
   top: 0;
   left: 0;
   right: 0;
@@ -27,7 +27,7 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   line-height: 20px;
   color: #222;
-  z-index: 9999999;
+  z-index: 2147483647;
   text-align: inherit;
   cursor: text;
   resize: horizontal;
