@@ -11,11 +11,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  transition: all 0.4s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 .text-selection-content {
+  position: relative;
   min-width: 500px;
   width: 40vw;
   height: content;
@@ -35,4 +35,18 @@
 .text-selection-content p {
   font-size: 27px !important;
   line-height: 50px !important;
+  margin-top: 20px;
+}
+
+.text-selection-content .close-button-content {
+  position: absolute;
+  font-style: inherit;
+  top: 15px;
+  left: 15px;
+  color: #222;
+  cursor: pointer;
+}
+
+.text-selection-content .close-button-content:hover {
+  opacity: 0.6;
 }
