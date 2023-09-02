@@ -11,6 +11,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 
 .text-selection-content {
@@ -27,14 +28,7 @@
   font-weight: 300;
   line-height: 1.5;
   color: #222;
+  z-index: 9999999;
   text-align: inherit;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-overflow-scrolling: touch;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  -webkit-text-size-adjust: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+  cursor: text;
 }
