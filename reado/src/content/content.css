@@ -16,8 +16,9 @@
 }
 
 .text-selection-content {
-  width: 80vw;
-  height: 90vh;
+  min-width: 500px;
+  width: 40vw;
+  height: content;
   overflow: scroll;
   padding: 40px;
   background-color: #fff;

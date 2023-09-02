@@ -40,13 +40,13 @@ chrome.runtime.onInstalled.addListener(function () {
   })
 
   // Open a new search tab when the user clicks a context menu
-  chrome.contextMenus.onClicked.addListener(async (item) => {
+  chrome.contextMenus.onClicked.addListener(async (item, tab) => {
     // const tld = item.menuItemId
     // const url = new URL(`https://google.${tld}/search`)
     // url.searchParams.set('q', item.selectionText as string)
     // chrome.tabs.create({ url: url.href, index: tab.index + 1 })
-    const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true })
-    chrome.tabs.sendMessage(tab.id as number, { selectedText: item.selectionText as string })
+    // const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true })
+    chrome.tabs.sendMessage(tab?.id as number, { selectedText: item.selectionText as string })
   })
 
   // Intentionally create an invalid item, to show off error checking in the
