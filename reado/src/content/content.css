@@ -16,9 +16,10 @@
 
 .text-selection-content {
   position: relative;
-  min-width: 500px;
+  min-width: 350px;
   width: 40vw;
-  height: content;
+  height: 80%;
+  max-height: 80vh;
   overflow: scroll;
   padding: 40px;
   background-color: #fff;
