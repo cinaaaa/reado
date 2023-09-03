@@ -40,7 +40,7 @@
 }
 
 .text-selection-content .close-button-content {
-  position: absolute;
+  position: fixed;
   font-style: inherit;
   top: 15px;
   left: 15px;

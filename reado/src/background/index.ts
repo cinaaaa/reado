@@ -1,12 +1,20 @@
 chrome.runtime.onInstalled.addListener(function () {
-  // Create one test item for each context type.
   chrome.contextMenus.create({
     title: 'Magnify with Reado',
     id: 'selection',
     contexts: ['selection'],
-  })
+  });
 
   chrome.contextMenus.onClicked.addListener(async (item, tab) => {
-    chrome.tabs.sendMessage(tab?.id as number, { selectedText: item.selectionText as string })
-  })
-})
+    chrome.tabs.sendMessage(tab?.id as number, { selectedText: item.selectionText as string });
+  });
+});
+
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  if (request.message === 'clicked_browser_action') {
+    console.log('clicked_browser_action');
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      chrome.tabs.sendMessage(tabs[0].id as number, { message: 'clicked_browser_action' });
+    });
+  }
+});

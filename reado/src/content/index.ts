@@ -1,43 +1,43 @@
-import './content.css'
+import './content.css';
 
-const body = document.querySelector('body') as HTMLBodyElement
-const section = document.createElement('section') as HTMLDivElement
+const body = document.querySelector('body') as HTMLBodyElement;
+const section = document.createElement('section') as HTMLDivElement;
 
 chrome.runtime.onMessage.addListener((message: { selectedText: string }, _) => {
   if (message.selectedText.length > 1) {
-    buildSection(message.selectedText)
+    buildSection(message.selectedText);
   }
-})
+});
 
 // listen to click events on the body
 body.addEventListener('click', (e) => {
   // check if the click is on the close button
   if (e.target && (e.target as HTMLElement).classList.contains('close-button-content')) {
-    destroySection()
+    destroySection();
   }
-})
+});
 
 body.addEventListener('keydown', (e) => {
   // and check that if the key is CTRL + M
   if (e.ctrlKey && e.key === 'm') {
-    const selection = window.getSelection()
-    const selectedText = selection?.toString().trim()
+    const selection = window.getSelection();
+    const selectedText = selection?.toString().trim();
     if (selectedText && selectedText.length > 1) {
-      buildSection(selectedText)
+      buildSection(selectedText);
     }
   }
   // check if the key is ESC
   if (e.key === 'Escape') {
-    destroySection()
+    destroySection();
   }
-})
+});
 
 function buildSection(text: string) {
   // disable the page scroll
-  section.classList.add('text-section-parent')
+  section.classList.add('text-section-parent');
 
-  body.style.overflow = 'hidden'
-  body.appendChild(section)
+  body.style.overflow = 'hidden';
+  body.appendChild(section);
 
   section.innerHTML = `
     <div class="text-selection-content">
@@ -46,10 +46,10 @@ function buildSection(text: string) {
       </svg>
       <p>${text}</p>
     </div>
-    `
+    `;
 }
 
 function destroySection() {
-  body.removeChild(section)
-  body.style.overflow = 'auto'
+  body.removeChild(section);
+  body.style.overflow = 'auto';
 }
