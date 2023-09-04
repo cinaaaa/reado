@@ -1,4 +1,4 @@
-import { defineManifest } from '@crxjs/vite-plugin'
+import { defineManifest } from '@crxjs/vite-plugin';
 
 export default defineManifest({
   name: 'Reado',
@@ -31,5 +31,5 @@ export default defineManifest({
       matches: [],
     },
   ],
-  permissions: ['contextMenus'],
-})
+  permissions: ['contextMenus', 'storage', 'activeTab', 'tabs'],
+});

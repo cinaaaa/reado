@@ -1,10 +1,92 @@
 import './index.css';
+import HTML_TEMPLATE from './html';
 
-const inputsToStore = [
+class StyleEditor {
+  private inputs: string[];
+
+  constructor(inputs: string[]) {
+    this.inputs = inputs;
+  }
+
+  private async setItem(key: string, value: string): Promise<void> {
+    await chrome.storage.local.set({ [key]: value });
+    console.log(`${key} = ${value}`);
+  }
+
+  private async getItem(key: string): Promise<string | undefined> {
+    const result = await chrome.storage.local.get([key]);
+    return result[key];
+  }
+
+  private updateValues(): void {
+    this.inputs.forEach((inputId) => {
+      const input = document.getElementById(inputId) as HTMLInputElement;
+      const preview = document.getElementById(`${inputId}Value`) as HTMLSpanElement;
+
+      if (input) {
+        this.setItem(inputId, input.value).then(() =>
+          chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            chrome.tabs.sendMessage(tabs[0].id!, {
+              message: 'update_style',
+              key: inputId,
+              value: input.value,
+            });
+          }),
+        );
+      }
+
+      if (preview) {
+        preview.innerHTML = input.value;
+      }
+    });
+  }
+
+  private updateSingleValueAndPreview(inputId: string): void {
+    const input = document.getElementById(inputId) as HTMLInputElement;
+    const preview = document.getElementById(`${inputId}Value`) as HTMLSpanElement;
+
+    this.getItem(inputId).then((value) => {
+      if (!value) return;
+      if (input) {
+        input.value = value;
+      }
+      if (preview) {
+        preview.innerHTML = value;
+      }
+    });
+  }
+
+  private initialize(): void {
+    document.addEventListener('change', (e) => {
+      if (e.target && this.inputs.includes((e.target as HTMLElement).id)) {
+        this.updateValues();
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      this.inputs.forEach((inputId) => {
+        this.updateSingleValueAndPreview(inputId);
+      });
+    });
+
+    chrome.runtime.onMessage.addListener((request, _) => {
+      if (request.message === 'clicked_browser_action') {
+        this.inputs.forEach((inputId) => {
+          this.updateSingleValueAndPreview(inputId);
+        });
+      }
+    });
+  }
+
+  public start(): void {
+    this.initialize();
+  }
+}
+
+const inputs: string[] = [
   'fontSize',
   'fontFamily',
   'lineHeight',
-  'letterSpacing',
   'wordSpacing',
   'textAlign',
   'backgroundOpacity',
@@ -12,131 +94,8 @@ const inputsToStore = [
   'textColor',
 ];
 
-// Listen to changes in input values and update the preview
-function updateValues() {
-  const inputsToPreview = [
-    'fontSize',
-    'fontFamily',
-    'lineHeight',
-    'letterSpacing',
-    'wordSpacing',
-    'textAlign',
-    'backgroundOpacity',
-    'textBackgroundColor',
-    'textColor',
-  ];
+const styleEditor = new StyleEditor(inputs);
 
-  for (let inputId of inputsToPreview) {
-    try {
-      let inputElement = document.getElementById(inputId) as HTMLInputElement;
-      let previewElement = document.getElementById(`${inputId}Value`) as HTMLSpanElement;
+document.querySelector<HTMLDivElement>('#app')!.innerHTML = HTML_TEMPLATE;
 
-      // if not previewElement, skip
-      if (previewElement) {
-        previewElement.innerHTML = inputElement.value;
-      }
-
-      // persist the value to the local storage
-      localStorage.setItem(inputId, inputElement.value);
-      console.log('updated ' + inputId);
-      console.log('value is  => ' + inputElement.value);
-    } catch (e) {
-      console.log(inputId + ' not found');
-    }
-  }
-}
-
-function initialValuesFromStorage() {
-  for (let inputId of inputsToStore) {
-    let inputElement = document.getElementById(inputId) as HTMLInputElement;
-    let previewElement = document.getElementById(`${inputId}Value`) as HTMLSpanElement;
-    let storedValue = localStorage.getItem(inputId) || null;
-
-    try {
-      if (storedValue) {
-        inputElement.value = storedValue;
-        previewElement.innerHTML = storedValue;
-      }
-    } catch (e) {
-      console.log(inputId + ' not found');
-    }
-  }
-}
-
-// listen to reado-component load and update preview
-document.addEventListener('change', function (e) {
-  if (e.target && inputsToStore.includes((e.target as HTMLElement).id)) {
-    updateValues();
-  }
-});
-
-// listen to reado-component load and update preview
-document.addEventListener('DOMContentLoaded', function () {
-  initialValuesFromStorage();
-});
-
-// listen to extension open and update preview
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  if (request.message === 'clicked_browser_action') {
-    initialValuesFromStorage();
-  }
-});
-
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <main id="reado--component">
-  <h1 class="reado--h1">Reado</h1>
-  <h2 class="reado--h2">Adjust your reading preferences</h2>
-  <div class="reado--grid-container">
-    <div class="reado--grid-item">
-      <h3>Font Size</h3>
-      <input type="range" min="1" max="100" value="50" class="reado--slider reado" id="fontSize">
-      <span id="fontSizeValue" class="reado">50</span>
-    </div>
-    <div class="reado--grid-item">
-      <h3>Font Family</h3>
-      <select name="font-family" id="fontFamily">
-        <option value="sans-serif">Sans-serif</option>
-        <option value="serif">Serif</option>
-        <option value="monospace">Monospace</option>
-        <option value="roboto">Roboto</option>
-      </select>
-    </div>
-    <div class="reado--grid-item">
-      <h3>Line Height</h3>
-      <input type="range" min="1" max="100" value="50" class="reado--slider" id="lineHeight">
-      <span id="lineHeightValue">50</span>
-    </div>
-    <div class="reado--grid-item">
-      <h3>Letter Spacing</h3>
-      <input type="range" min="1" max="100" value="50" class="reado--slider" id="letterSpacing">
-      <span id="letterSpacingValue">50</span>
-    </div>
-    <div class="reado--grid-item">
-      <h3>Word Spacing</h3>
-      <input type="range" min="1" max="100" value="50" class="reado--slider" id="wordSpacing">
-      <span id="wordSpacingValue">50</span>
-    </div>
-    <div class="reado--grid-item">
-      <h3>Text Align</h3>
-      <select name="text-align" id="textAlign">
-        <option value="left">Left</option>
-        <option value="center">Center</option>
-        <option value="right">Right</option>
-      </select>
-    </div>
-    <div class="reado--grid-item">
-      <h3>Background Opacity</h3>
-      <input type="range" min="1" max="100" value="50" class="reado--slider" id="backgroundOpacity">
-      <span id="backgroundOpacityValue">50</span>
-    </div>
-    <div class="reado--grid-item">
-      <h3>Text Background Color</h3>
-      <input type="color" id="textBackgroundColor" name="text-background-color" value="#ffffff">
-    </div>
-    <div class="reado--grid-item">
-      <h3>Text Color</h3>
-      <input type="color" id="textColor" name="text-color" value="#000000" onchange="alert('test')">
-    </div>
-  </div>
-</main>
-`;
+styleEditor.start();
