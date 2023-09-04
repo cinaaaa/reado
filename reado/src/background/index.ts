@@ -1,3 +1,5 @@
+import { EventTypes } from '../constants/enums';
+
 chrome.runtime.onInstalled.addListener(function () {
   chrome.contextMenus.create({
     title: 'Magnify with Reado 🔎',
@@ -11,7 +13,7 @@ chrome.runtime.onInstalled.addListener(function () {
 });
 
 chrome.runtime.onMessage.addListener(function (request, _) {
-  if (request.message === 'clicked_browser_action') {
+  if (request.message === EventTypes.CLICKED_ON_CONTEXT_MENU) {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
       chrome.tabs.sendMessage(tabs[0].id as number, { message: 'clicked_browser_action' });
     });

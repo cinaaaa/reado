@@ -1,11 +1,11 @@
 body {
-  min-width: 330px;
+  min-width: 20rem;
   background-color: #222;
-  height: 100%;
-  overflow: hidden;
+  height: 300px;
 }
 
 #reado--component {
+  padding: 1em;
   margin: 0 auto;
   color: white;
   padding: 20px;

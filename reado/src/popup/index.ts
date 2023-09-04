@@ -1,7 +1,9 @@
 import './index.css';
 import HTML_TEMPLATE from './html';
+import { INPUT_NAMES, ROOT_ELEMENT } from '../constants';
+import { EventTypes } from '../constants/enums';
 
-class StyleEditor {
+class PopupController {
   private inputs: string[];
 
   constructor(inputs: string[]) {
@@ -10,7 +12,6 @@ class StyleEditor {
 
   private async setItem(key: string, value: string): Promise<void> {
     await chrome.storage.local.set({ [key]: value });
-    console.log(`${key} = ${value}`);
   }
 
   private async getItem(key: string): Promise<string | undefined> {
@@ -27,7 +28,7 @@ class StyleEditor {
         this.setItem(inputId, input.value).then(() =>
           chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             chrome.tabs.sendMessage(tabs[0].id!, {
-              message: 'update_style',
+              message: EventTypes.STYLE_UPDATE,
               key: inputId,
               value: input.value,
             });
@@ -57,6 +58,8 @@ class StyleEditor {
   }
 
   private initialize(): void {
+    document.querySelector<HTMLDivElement>(ROOT_ELEMENT)!.innerHTML = HTML_TEMPLATE;
+
     document.addEventListener('change', (e) => {
       if (e.target && this.inputs.includes((e.target as HTMLElement).id)) {
         this.updateValues();
@@ -70,7 +73,7 @@ class StyleEditor {
     });
 
     chrome.runtime.onMessage.addListener((request, _) => {
-      if (request.message === 'clicked_browser_action') {
+      if (request.message === EventTypes.CLICKED_ON_CONTEXT_MENU) {
         this.inputs.forEach((inputId) => {
           this.updateSingleValueAndPreview(inputId);
         });
@@ -78,24 +81,10 @@ class StyleEditor {
     });
   }
 
-  public start(): void {
+  public intial(): void {
     this.initialize();
   }
 }
 
-const inputs: string[] = [
-  'fontSize',
-  'fontFamily',
-  'lineHeight',
-  'wordSpacing',
-  'textAlign',
-  'backgroundOpacity',
-  'textBackgroundColor',
-  'textColor',
-];
-
-const styleEditor = new StyleEditor(inputs);
-
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = HTML_TEMPLATE;
-
-styleEditor.start();
+const popupController = new PopupController(INPUT_NAMES);
+popupController.intial();

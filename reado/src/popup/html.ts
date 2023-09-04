@@ -9,11 +9,10 @@ const HTML_TEMPLATE = `<main id="reado--component">
     </div>
     <div class="reado--grid-item">
       <h3>Font Family</h3>
-      <select name="font-family" id="fontFamily">
-        <option value="serif" selected>Serif</option>
+      <select name="font-family" id="fontFamily" value="serif">
+        <option value="serif">Serif</option>
         <option value="sans-serif">Sans-serif</option>
-        <option value="monospace">Monospace</option>
-        <option value="roboto">Roboto</option>
+        <option value="inherit">Inherit</option>
       </select>
     </div>
     <div class="reado--grid-item">
@@ -28,8 +27,8 @@ const HTML_TEMPLATE = `<main id="reado--component">
     </div>
     <div class="reado--grid-item">
       <h3>Text Align</h3>
-      <select name="text-align" id="textAlign">
-        <option value="left" selected>Left</option>
+      <select name="text-align" id="textAlign" value="left">
+        <option value="left">Left</option>
         <option value="center">Center</option>
         <option value="right">Right</option>
       </select>
@@ -45,7 +44,7 @@ const HTML_TEMPLATE = `<main id="reado--component">
     </div>
     <div class="reado--grid-item">
       <h3>Text Color</h3>
-      <input type="color" id="textColor" name="text-color" value="#222222">
+      <input type="color" id="textColor" name="text-color" value="#222222" >
     </div>
   </div>
 </main>

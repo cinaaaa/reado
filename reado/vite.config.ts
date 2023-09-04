@@ -1,10 +1,10 @@
-import { defineConfig } from 'vite'
-import { crx } from '@crxjs/vite-plugin'
+import { defineConfig } from 'vite';
+import { crx } from '@crxjs/vite-plugin';
 import zipPack from 'vite-plugin-zip-pack';
-import manifest from './src/manifest'
+// @ts-ignore
+import manifest from './src/manifest';
 
-// https://vitejs.dev/config/
-export default defineConfig(({ mode }) => {
+export default defineConfig(() => {
   return {
     build: {
       emptyOutDir: true,
@@ -16,11 +16,17 @@ export default defineConfig(({ mode }) => {
       },
     },
 
-    plugins: [crx({ manifest }),zipPack({
+    plugins: [
+      crx({ manifest }),
+      zipPack({
         outDir: `package`,
         inDir: 'build',
         // @ts-ignore
-        outFileName: `${manifest.short_name ?? manifest.name.replaceAll(" ", "-")}-extension-v${manifest.version}.zip`,
-      }),],
-  }
-})
+        outFileName: `${manifest.short_name ?? manifest.name.replaceAll(' ', '-')}-extension-v${
+          // @ts-ignore
+          manifest.version
+        }.zip`,
+      }),
+    ],
+  };
+});
