@@ -19,7 +19,7 @@ body.addEventListener('click', (e) => {
 
 body.addEventListener('keydown', (e) => {
   // and check that if the key is CTRL + M
-  if (e.ctrlKey && e.key === 'm') {
+  if (e.ctrlKey && e.code === 'KeyM') {
     const selection = window.getSelection();
     const selectedText = selection?.toString().trim();
     if (selectedText && selectedText.length > 1) {
@@ -32,19 +32,21 @@ body.addEventListener('keydown', (e) => {
   }
 });
 
+document.addEventListener('storage', function (e) {
+  alert('storage changed');
+});
+
 function buildSection(text: string) {
   // disable the page scroll
   section.classList.add('text-section-parent');
-
   body.style.overflow = 'hidden';
   body.appendChild(section);
-
   section.innerHTML = `
     <div class="text-selection-content">
       <svg class="close-button-content" x="0px" y="0px" width="25" height="25" viewBox="0 0 50 50">
       <path d="M 7.71875 6.28125 L 6.28125 7.71875 L 23.5625 25 L 6.28125 42.28125 L 7.71875 43.71875 L 25 26.4375 L 42.28125 43.71875 L 43.71875 42.28125 L 26.4375 25 L 43.71875 7.71875 L 42.28125 6.28125 L 25 23.5625 Z"></path>
       </svg>
-      <p>${text}</p>
+      <p class="text-selection-content-p">${text}</p>
     </div>
     `;
 }
