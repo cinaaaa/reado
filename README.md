@@ -1,6 +1,6 @@
 ## Reado - Your Ultimate Chrome Reading Companion
 
-<img src="https://github.com/cinaaaa/reado/blob/main/reado/public/img/logo-128.png?raw=true" width="128px" height="128px" />
+<img src="https://github.com/cinaaaa/reado/blob/main/public/img/logo-128.png?raw=true" width="128px" height="128px" />
 
 Reado is the ultimate Chrome extension for those seeking a seamless reading experience. Whether you're delving into lengthy articles, research papers, or simply enjoying a good read, this extension empowers you to read with laser-like focus.
 
