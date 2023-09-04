@@ -2,8 +2,8 @@ import { defineManifest } from '@crxjs/vite-plugin';
 
 export default defineManifest({
   name: 'Reado',
-  description: '',
-  version: '0.0.0',
+  description: 'Chrome extension for those seeking a seamless reading experience 👀',
+  version: '0.0.1',
   manifest_version: 3,
   icons: {
     '16': 'img/logo-16.png',
