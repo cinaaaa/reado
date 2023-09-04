@@ -1,0 +1,55 @@
+.text-section-parent {
+  position: fixed;
+  z-index: 2147483646;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.99);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: background-color 0.2s ease-in-out;
+  overflow: hidden;
+}
+
+.text-selection-content {
+  position: relative;
+  min-width: 550px;
+  width: 40%;
+  height: 90%;
+  max-height: 90vh;
+  overflow: scroll !important; /* Use "scroll" to always show the scrollbar */
+  text-align: inherit;
+  color: #222;
+  line-height: 1.2;
+  z-index: 2147483647;
+}
+
+.text-selection-content-p {
+  font-size: 27px;
+  line-height: 1.8; /* Adjusted line height for better readability */
+}
+
+.text-selection-content .close-button-content {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  cursor: pointer;
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  padding: 7px;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.text-selection-content .close-button-content:hover {
+  opacity: 0.6;
+}

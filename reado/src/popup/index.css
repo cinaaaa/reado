@@ -1,0 +1,98 @@
+body {
+  min-width: 20rem;
+  background-color: #222;
+  height: 300px;
+}
+
+#reado--component {
+  padding: 1em;
+  margin: 0 auto;
+  color: white;
+  padding: 20px;
+}
+
+/* Style the headings */
+.reado--h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.reado--h2 {
+  font-size: 18px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+/* Create a two-row grid layout */
+.reado--grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two columns */
+  gap: 20px; /* Gap between grid items */
+}
+
+.reado--grid-item {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+/* Style the range input and color picker */
+.reado input[type='range'],
+.reado input[type='color'],
+.reado select {
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+/* Style the value display next to the range input */
+.reado span {
+  display: inline-block;
+  margin-left: 10px;
+  font-size: 14px;
+  width: 30px;
+}
+
+/* Style the color picker label */
+.reado label {
+  display: block;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+/* Style the color picker input */
+.reado input[type='color'] {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: none;
+}
+
+/* Style the color picker preview box */
+.reado--color-preview {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #000;
+  vertical-align: middle;
+  margin-left: 5px;
+}
+
+/* Center text alignment options */
+.reado select[name='text-align'] {
+  text-align-last: center;
+}
+
+/* Apply some padding to the color picker input */
+.reado input[type='color'] {
+  padding: 2px;
+}
+
+/* Style the color picker label */
+.reado label[for='text-background-color'] {
+  margin-top: 10px;
+}
+
+/* Style the color picker label */
+.reado label[for='text-color'] {
+  margin-top: 10px;
+}
