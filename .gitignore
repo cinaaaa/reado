@@ -129,3 +129,8 @@ dist
 .yarn/install-state.gz
 .pnp.*
 reado/src/popup/index.ts
+src/content/content.css
+
+/build
+/dist
+build
