@@ -23,8 +23,7 @@
         "assets/content-script-loader.chunk-f557ce1e.c5cc0097.js"
       ],
       "matches": [
-        "http://*/*",
-        "https://*/*"
+        "<all_urls>"
       ],
       "css": [
         "assets/index.ts.bbb2e7c6.css"
@@ -44,8 +43,7 @@
     },
     {
       "matches": [
-        "http://*/*",
-        "https://*/*"
+        "<all_urls>"
       ],
       "resources": [
         "assets/chunk-cb6af00f.js",
@@ -58,7 +56,6 @@
   "permissions": [
     "contextMenus",
     "storage",
-    "activeTab",
     "tabs"
   ]
 }
