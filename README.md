@@ -27,7 +27,7 @@ Our user-friendly interface ensures that anyone can start using Reado immediatel
 - Just click on the extension icon to customize the preferences.
 
 #### Installation
-- You can install Reado directly from the Chrome Web Store.
+- You can install Reado directly from the Chrome Web Store [Download on the chrome webstore](https://chrome.google.com/webstore/detail/reado/ikbddoonijmhdpephjohmekncdipchni)
 
 #### Feedback and Support
 If you have any questions, suggestions, or need assistance, please feel free to reach out to us at hey@bugpointer.dev.
